@@ -125,9 +125,10 @@ class Screen: 	# Screen class to interact with the screen
 
 	def listen(self):
 		for event in pygame.event.get(): 	# For each event in the queue
-			if event.type == QUIT: 	# QUIT
+			if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE): 	# QUIT
 				self.opened = False
 				pygame.quit() 	# We stop the game
+
 
 
 def check_positive(value):
