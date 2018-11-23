@@ -1,11 +1,11 @@
 from Model import *
 
 width = 10
-ScoutAnts = width
-WorkerAnts = 10*width
-DecreaseRate = 0.7
+scoutAnts = width
+workerAnts = 10*width
+decreaseRate = 0.7
 
-world = World(width, ScoutAnts, WorkerAnts, DecreaseRate)
+world = World(width, scoutAnts, workerAnts, decreaseRate)
 
 while not world.pathFound:
 	world.loop()
