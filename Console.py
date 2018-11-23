@@ -1,18 +1,18 @@
 from Model import *
 
-largeur = 10
-fourmisEclaireuses = largeur
-fourmisOuvrieres = 10*largeur
-tauxDecroissement = 0.7
+width = 10
+ScoutAnts = width
+WorkerAnts = 10*width
+DecreaseRate = 0.7
 
-monMonde = Monde(largeur, fourmisEclaireuses, fourmisOuvrieres, tauxDecroissement)
+world = Monde(width, ScoutAnts, WorkerAnts, DecreaseRate)
 
-while not monMonde.cheminTrouve:
-	monMonde.effectuerTourProgramme()
+while not world.cheminTrouve:
+	world.effectuerTourProgramme()
 
-print("Nourriture : {}".format(monMonde.nourriture))
-print("Chemin trouvé : {}".format(monMonde.dernierCheminTrouve))
-print("Fourmilière : {}".format(monMonde.fourmiliere))
+print("Food: {}".format(world.nourriture))
+print("Used path: {}".format(world.dernierCheminTrouve))
+print("Anthill: {}".format(world.fourmiliere))
 
-print("\nDistance réellement optimale : {}".format(monMonde.distanceCheminReellementOptimal()))
-print("Distance trouvée : {}".format(len(monMonde.dernierCheminTrouve)+1))
+print("\nOptimal distance: {}".format(world.distanceCheminReellementOptimal()))
+print("Used distance: {}".format(len(world.dernierCheminTrouve)+1))
