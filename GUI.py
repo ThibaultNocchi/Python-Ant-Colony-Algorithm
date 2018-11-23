@@ -5,19 +5,18 @@ from time import sleep
 
 class Screen: 	# Screen class to interact with the screen
 
-	def __init__(self, L, fourmiliere, nourriture, elementSize = 30, borderSize = 1, margin = 100):
+	def __init__(self, L, antHill, food, elementSize = 30, borderSize = 1, margin = 100):
 
 		self.L = L
 
-		self.fourmiliere = fourmiliere
-		self.nourriture = nourriture
+		self.antHill = antHill
+		self.food = food
 
 		self.elementSize = elementSize
 		self.borderSize = borderSize
 
 		self.margin = margin
-		self.ScreenL = L*(self.elementSize + self.borderSize) + self.margin
-
+		self.ScreenLength = L*(self.elementSize + self.borderSize) + self.margin
 		self.XText = self.margin / 4
 		self.YText = self.margin / 8
 		self.SXText = 0
@@ -47,8 +46,8 @@ class Screen: 	# Screen class to interact with the screen
 		return self.font.size(text) 										# Returns the text size
 
 	def startScreen(self):
-		self.window = pygame.display.set_mode((self.ScreenL, self.ScreenL))
-		pygame.display.set_caption("GUI Fourmis")
+		self.window = pygame.display.set_mode((self.ScreenLength, self.ScreenLength))
+		pygame.display.set_caption("Ants GUI")
 
 		self.window.fill(Color("white"))
 
@@ -62,13 +61,13 @@ class Screen: 	# Screen class to interact with the screen
 				Y += self.elementSize + self.borderSize
 			X += self.elementSize + self.borderSize
 
-		fourmiliereCoords = self.getPygameCornerOfCell(self.fourmiliere[0], self.fourmiliere[1])
+		antHillCoords = self.getPygameCornerOfCell(self.antHill[0], self.antHill[1])
 		self.changeInnerRectColor("brown")
-		self.window.blit(self.basicRect, fourmiliereCoords)
+		self.window.blit(self.basicRect, antHillCoords)
 
-		nourritureCoords = self.getPygameCornerOfCell(self.nourriture[0], self.nourriture[1])
+		foodCoords = self.getPygameCornerOfCell(self.food[0], self.food[1])
 		self.changeInnerRectColor("green")
-		self.window.blit(self.basicRect, nourritureCoords)
+		self.window.blit(self.basicRect, foodCoords)
 
 
 		pygame.display.update()
@@ -97,7 +96,7 @@ class Screen: 	# Screen class to interact with the screen
 		self.basicRect.blit(self.innerRect, (self.borderSize, self.borderSize))
 
 	def updateScore(self, score):
-		pos = self.drawText("A/R : {}".format(score), self.XText, self.YText, self.SXText, self.SYText)
+		pos = self.drawText("Round trip(s) : {}".format(score), self.XText, self.YText, self.SXText, self.SYText)
 		self.SXText = pos[0]
 		self.SYText = pos[1]
 
@@ -106,7 +105,7 @@ class Screen: 	# Screen class to interact with the screen
 		for i in range(len(pheromones)):
 			for j in range(len(pheromones)):
 
-				if not ((i == self.fourmiliere[0] and j == self.fourmiliere[1]) or (i == self.nourriture[0] and j == self.nourriture[1])):
+				if not ((i == self.antHill[0] and j == self.antHill[1]) or (i == self.food[0] and j == self.food[1])):
 					cellCoords = self.getPygameCornerOfCell(i, j)
 					rgb = 255-round(pheromones[i][j])
 					self.changeInnerRectColor((rgb, rgb, rgb))
@@ -116,7 +115,7 @@ class Screen: 	# Screen class to interact with the screen
 
 		for i in range(len(ants)):
 			for j in range(len(ants)):
-				if not ((i == self.fourmiliere[0] and j == self.fourmiliere[1]) or (i == self.nourriture[0] and j == self.nourriture[1])):
+				if not ((i == self.antHill[0] and j == self.antHill[1]) or (i == self.food[0] and j == self.food[1])):
 					cellCoords = self.getPygameCornerOfCell(i, j)
 					rgb = 255-round(ants[i][j])*10
 					self.changeInnerRectColor((rgb, rgb, rgb))
@@ -130,21 +129,21 @@ class Screen: 	# Screen class to interact with the screen
 				pygame.quit() 	# We stop the game
 
 
-largeur = 10
-fourmisEclaireuses = largeur
-fourmisOuvrieres = 10*largeur
-tauxDecroissement = 0.7
+width = 10
+scoutAnts = width
+workerAnts = 10*width
+decreaseRate = 0.7
 
-monMonde = Model.World(largeur, fourmisEclaireuses, fourmisOuvrieres, tauxDecroissement)
-myScreen = Screen(monMonde.width, monMonde.anthill, monMonde.food)
-myScreen.startScreen()
+world = Model.World(width, scoutAnts, workerAnts, decreaseRate)
+screen = Screen(world.width, world.anthill, world.food)
+screen.startScreen()
 
-while myScreen.opened:
-	monMonde.loop()
-	myScreen.updateAnts(monMonde.antsNumberPerCell())
-	myScreen.updateScore(monMonde.broughtFood)
+while screen.opened:
+	world.loop()
+	screen.updateAnts(world.antsNumberPerCell())
+	screen.updateScore(world.broughtFood)
 	pygame.display.update()
-	myScreen.listen()
+	screen.listen()
 	sleep(0.016)
 
-print(monMonde.lastFoundPath)
+print(world.lastFoundPath)
