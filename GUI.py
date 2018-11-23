@@ -135,16 +135,16 @@ fourmisEclaireuses = largeur
 fourmisOuvrieres = 10*largeur
 tauxDecroissement = 0.7
 
-monMonde = Model.Monde(largeur, fourmisEclaireuses, fourmisOuvrieres, tauxDecroissement)
-myScreen = Screen(monMonde.largeur, monMonde.fourmiliere, monMonde.nourriture)
+monMonde = Model.World(largeur, fourmisEclaireuses, fourmisOuvrieres, tauxDecroissement)
+myScreen = Screen(monMonde.width, monMonde.anthill, monMonde.food)
 myScreen.startScreen()
 
 while myScreen.opened:
-	monMonde.effectuerTourProgramme()
-	myScreen.updateAnts(monMonde.nombreFourmisParPosition())
-	myScreen.updateScore(monMonde.nourritureApportee)
+	monMonde.loop()
+	myScreen.updateAnts(monMonde.antsNumberPerCell())
+	myScreen.updateScore(monMonde.broughtFood)
 	pygame.display.update()
 	myScreen.listen()
 	sleep(0.016)
 
-print(monMonde.dernierCheminTrouve)
+print(monMonde.lastFoundPath)

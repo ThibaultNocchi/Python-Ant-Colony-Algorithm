@@ -5,14 +5,14 @@ ScoutAnts = width
 WorkerAnts = 10*width
 DecreaseRate = 0.7
 
-world = Monde(width, ScoutAnts, WorkerAnts, DecreaseRate)
+world = World(width, ScoutAnts, WorkerAnts, DecreaseRate)
 
-while not world.cheminTrouve:
-	world.effectuerTourProgramme()
+while not world.pathFound:
+	world.loop()
 
-print("Food: {}".format(world.nourriture))
-print("Used path: {}".format(world.dernierCheminTrouve))
-print("Anthill: {}".format(world.fourmiliere))
+print("Food: {}".format(world.food))
+print("Used path: {}".format(world.lastFoundPath))
+print("Anthill: {}".format(world.anthill))
 
-print("\nOptimal distance: {}".format(world.distanceCheminReellementOptimal()))
-print("Used distance: {}".format(len(world.dernierCheminTrouve)+1))
+print("\nOptimal distance: {}".format(world.realOptimalDistance()))
+print("Used distance: {}".format(len(world.lastFoundPath)+1))
