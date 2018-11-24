@@ -2,12 +2,14 @@ from Model import *
 import argparse
 
 def check_positive(value):
+	""" Checks if the given value is positive. Used for the command line. """
     ivalue = int(value)
     if ivalue <= 0:
          raise argparse.ArgumentTypeError("argument needs to be positive")
     return ivalue
 
 def check_0_1(value):
+	""" Checks if the given value is between 0 and 1. Used for the command line. """
 	fvalue = float(value)
 	if fvalue < 0 or fvalue > 1:
 		raise argparse.ArgumentTypeError("argument needs to be between 0 and 1")
