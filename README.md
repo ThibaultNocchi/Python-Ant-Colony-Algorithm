@@ -42,7 +42,7 @@ python GUI.py -h
 ## Authors
 
 Thibault Nocchi  
-To contact me, [file an issue](https://github.com/Tiwenty/Python-Ant-Colony-Algorithm/issues), thanks.
+To contact me, [file an issue](https://github.com/ThibaultNocchi/Python-Ant-Colony-Algorithm/issues), thanks.
 
 ## License
 
